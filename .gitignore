@@ -1,0 +1,36 @@
+# User-requested exclusions
+Documentation/
+EEG ppt.pptx
+
+# Python & Virtual Environments
+**/venv/
+**/.venv/
+**/env/
+**/ENV/
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+*.mp3
+**/tts_*.mp3
+temp.mp3
+
+# Environment Configurations (keep .env.example)
+**/.env
+!**/.env.example
+
+# PlatformIO & Embedded Builds
+**/.pio/
+**/.pioenvs/
+**/.piolibdeps/
+
+# Editor & IDE configs
+**/.vscode/
+**/.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS & Temporary files
+Thumbs.db
+[Dd]esktop.ini
+*.tmp
+*.log
