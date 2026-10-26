@@ -1,14 +1,21 @@
 @echo off
-title RoboticHand - Hardware Simulator
+cd /d "%~dp0"
+title RoboticHand - Unified Command Center
 echo ========================================================
-echo   RoboticHand ESP8266 Hardware Simulator & Visualizer
+echo   RoboticHand Unified Command Center & Simulator
 echo ========================================================
 echo.
-echo Starting Mock Server on http://localhost:5000/ ...
-echo UDP Port: 8888 (Vision Streaming)
-echo HTTP Port: 5000 (Web GUI & Voice Commands)
+echo Starting Unified Server on http://localhost:5000/ ...
+echo   - 🖐️ Bionic Hand Real-Time Model
+echo   - 🎚️ 5-Finger Slider Controls
+echo   - 📷 Embedded MediaPipe Vision Tracking (Toggle via GUI)
+echo   - 🎤 Embedded Voice Control Station (Toggle via GUI)
 echo.
 start http://localhost:5000/
-start http://localhost:5000/controlGUI
-".venv\Scripts\python.exe" "mock_esp8266.py"
+
+if exist ".venv\Scripts\python.exe" (
+    ".venv\Scripts\python.exe" "mock_esp8266.py"
+) else (
+    python "mock_esp8266.py"
+)
 pause
