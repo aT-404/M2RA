@@ -1,7 +1,11 @@
 # Comprehensive Technical Report: 5-DOF IoT Bionic Robotic Hand
 **Document Version:** 1.0  
 **Project Phase:** Phase 1 (Firmware, Multi-Modal Software Control, Mechanical Validation, and Hardware-Free Simulation)  
-**Author / Developer:** Albert Toj Kayyalaparambil  
+**Project Team / Developers:**
+- **Albert Toj Kayyalaparambil**
+- **Vivek Viswanath**
+- **Ronith Promy**
+- **Shifa Mariyam**  
 **Date:** October 2026  
 
 ---

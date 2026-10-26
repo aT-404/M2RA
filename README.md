@@ -27,6 +27,7 @@ An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic r
 - [Communication Protocol Specs](#-communication-protocol-specs)
 - [Troubleshooting & Diagnostics](#-troubleshooting--diagnostics)
 - [Project Report & Documentation](#-project-report--documentation)
+- [Project Team](#-project-team)
 - [License](#-license)
 
 ---
@@ -278,6 +279,15 @@ You can explore the entire project right now without any physical microcontrolle
 
 For a comprehensive technical write-up, architectural design details, electrical analysis, and the defect audit log, refer to:
 - [**`PROJECT_REPORT.md`**](PROJECT_REPORT.md) — Comprehensive technical report covering Phase 1 development, audit remediation, and system verification.
+
+---
+
+## 👥 Project Team
+
+- **Albert Toj Kayyalaparambil**
+- **Vivek Viswanath**
+- **Ronith Promy**
+- **Shifa Mariyam**
 
 ---
 

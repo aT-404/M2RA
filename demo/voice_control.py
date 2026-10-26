@@ -1,3 +1,11 @@
+"""
+RoboticHand Voice Control System (Demo / Simulator Client)
+Developers: Albert Toj Kayyalaparambil, Vivek Viswanath, Ronith Promy, Shifa Mariyam
+
+Speech recognition and intent parsing system that dispatches gesture commands to local
+simulator or ESP8266 and responds with neural Edge-TTS voice feedback.
+"""
+
 import speech_recognition as sr
 import requests
 import edge_tts

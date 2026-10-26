@@ -1,3 +1,10 @@
+/*
+ * RoboticHand ESP8266 Firmware
+ * Project: 5-DOF Anthropomorphic Robotic Prosthetic Hand
+ * Developers: Albert Toj Kayyalaparambil, Vivek Viswanath, Ronith Promy, Shifa Mariyam
+ * Hardware: ESP8266 NodeMCU, 5x Servos (SG90/MG90S), SH1106 I2C OLED Display
+ */
+
 #include <Servo.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>

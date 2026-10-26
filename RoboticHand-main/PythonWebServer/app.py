@@ -1,3 +1,11 @@
+"""
+RoboticHand Vision Control System
+Developers: Albert Toj Kayyalaparambil, Vivek Viswanath, Ronith Promy, Shifa Mariyam
+
+Real-time hand tracking and 5-finger angular estimation via MediaPipe Hand Landmarker,
+streaming UDP servo coordinates to the ESP8266 robotic hand controller.
+"""
+
 import cv2
 import mediapipe as mp
 from mediapipe.tasks import python

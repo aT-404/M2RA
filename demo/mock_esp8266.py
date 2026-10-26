@@ -1,5 +1,7 @@
 """
 RoboticHand Unified Command Center & Hardware Simulator
+Developers: Albert Toj Kayyalaparambil, Vivek Viswanath, Ronith Promy, Shifa Mariyam
+
 Integrates into a single modern dashboard:
 1. Live Animated 2D/3D Bionic Hand Model
 2. 5-Finger Slider Controls (Thumb, Index, Middle, Ring, Pinky: 0°-180°)
@@ -787,7 +789,7 @@ class UnifiedControlCenterHandler(http.server.BaseHTTPRequestHandler):
             <span class="logo-icon">🤖</span>
             <div>
                 <h1>RoboticHand Command Center</h1>
-                <div style="font-size: 11px; color: var(--text-muted);">Unified Multi-Modal Control Station (Vision • Voice • Sliders • Simulation)</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Unified Multi-Modal Control Station • Team: Albert Toj Kayyalaparambil, Vivek Viswanath, Ronith Promy, Shifa Mariyam</div>
             </div>
         </div>
         <div class="header-badges">
