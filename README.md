@@ -5,17 +5,30 @@
 [![Computer Vision: MediaPipe](https://img.shields.io/badge/Vision-Google%20MediaPipe-green.svg)](https://developers.google.com/mediapipe)
 [![Framework: PlatformIO](https://img.shields.io/badge/Firmware-PlatformIO%20%7C%20Arduino-orange.svg)](https://platformio.org/)
 [![Python: 3.10--3.13](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![Status: In Progress](https://img.shields.io/badge/Status-In%20Progress-amber.svg)](#-project-status)
 
-An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic robotic hand system engineered to operate at an unprecedented low cost (~₹1,000 / $12 USD in electronic components). The project pairs 3D-printed bio-mechanisms with an onboard **NodeMCU ESP8266** controller and three independent control modalities:
-1. **Real-Time Computer Vision Tracking** (OpenCV + MediaPipe 21-point hand tracking with EMA anti-jitter smoothing streamed via low-latency UDP).
-2. **Acoustic Voice Control** (Google Web Speech Recognition with Microsoft Edge Neural TTS audio feedback).
-3. **On-Device Responsive Web GUI** (Slider controls and gesture buttons served directly by the ESP8266 web server).
-4. **Interactive Hardware-Free Simulator** (Complete browser-based 2D articulated hand model, virtual OLED display, and UDP/HTTP test console).
+An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic robotic hand system engineered to operate at an unprecedented low cost (~₹1,200 / ~$14 USD in electronic components). The system pairs 3D-printed bio-mechanisms with an onboard **NodeMCU ESP8266** microcontroller and four multi-modal control pipelines:
+
+1. **Real-Time Computer Vision Tracking** *(Operational)*: OpenCV + MediaPipe 21-point hand tracking with EMA anti-jitter smoothing streamed via low-latency UDP.
+2. **Acoustic Voice Control** *(Operational)*: Google Web Speech Recognition with Microsoft Edge Neural TTS audio feedback.
+3. **On-Device Responsive Web GUI** *(Operational)*: Live finger slider controls and macro gesture buttons served directly by the ESP8266 HTTP web server.
+4. **EEG Brain-Computer Interface (BCI) Control** *(In Progress)*: Non-invasive electroencephalography sensor signal acquisition, artifact filtering, and motor imagery pattern classification for direct neural actuation.
+
+In addition, an **Interactive Hardware-Free Simulator** provides a full browser-based 2D articulated hand model, virtual OLED display, and UDP/HTTP test station for rapid testing without physical hardware.
+
+---
+
+## 📌 Project Status
+
+This project is actively **in progress**. 
+- **Completed & Operational:** 5-DOF mechanical design & 3D printing files, ESP8266 firmware, real-time computer vision tracking, speech recognition voice interface, embedded web control station, and the unified hardware-free simulator.
+- **Under Active Development:** The **4th control modality — EEG (Electroencephalography) Control**. This pipeline focuses on capturing raw neuro-signals, processing frequency bands (mu/beta rhythms associated with motor intent), and translating classified mental commands into robotic finger flexes.
 
 ---
 
 ## 📑 Table of Contents
-- [Project Overview](#-project-overview)
+- [Project Status](#-project-status)
+- [Project Overview](#-key-features)
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
 - [Repository Structure](#-repository-structure)
@@ -26,7 +39,6 @@ An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic r
   - [Option B: Physical Hardware Deployment (ESP8266 + Servos)](#option-b-physical-hardware-deployment-esp8266--servos)
 - [Communication Protocol Specs](#-communication-protocol-specs)
 - [Troubleshooting & Diagnostics](#-troubleshooting--diagnostics)
-- [Project Report & Documentation](#-project-report--documentation)
 - [Project Team](#-project-team)
 - [License](#-license)
 
@@ -39,6 +51,7 @@ An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic r
 - **Low-Latency Vision Mimicry**: Real-time 3D hand landmark estimation calculating Euclidean finger curl distances normalized to 0°–180° servo angles, transmitted via UDP on port 8888.
 - **Anti-Jitter EMA Filter**: Exponential Moving Average smoothing (`EMA_ALPHA = 0.35`) prevents servo chatter and mechanical wear.
 - **Acoustic Feedback**: Hands-free voice commands parsed via Google Speech Recognition with spoken responses synthesized through Microsoft Edge Neural TTS (`en-US-JennyNeural`).
+- **EEG Neural Control (In Progress)**: Brain-Computer Interface pipeline for decoding motor intent from EEG brainwave rhythms.
 - **Captive Network Provisioning**: On-device soft AP (`ServoGrip`) broadcasts automatically when disconnected, offering a zero-code configuration portal.
 - **Hardware-Free Simulation Environment**: Test the Web GUI, vision tracking, and voice control directly on your PC with zero physical hardware connected.
 
@@ -47,41 +60,42 @@ An accessible, tendon-actuated, five-degree-of-freedom (5-DOF) anthropomorphic r
 ## 🏗️ System Architecture
 
 ```
-                          +-----------------------------+
-                          |   User Control Modalities   |
-                          +-----------------------------+
-                                         |
-             +---------------------------+---------------------------+
-             |                           |                           |
-             v                           v                           v
-    +------------------+       +-------------------+       +--------------------+
-    |  Web Dashboard   |       | OpenCV+MediaPipe  |       | SpeechRecognition  |
-    | (Browser/Mobile) |       |  (Webcam Vision)  |       |   & Edge-TTS (Mic) |
-    +------------------+       +-------------------+       +--------------------+
-             |                           |                           |
-        HTTP GET/POST                   UDP                         HTTP
-     (Port 80 REST API)              (Port 8888)             (Port 80 /gesture)
-             |                           |                           |
-             +---------------------------+---------------------------+
-                                         |
-                                         v
-                         +-------------------------------+
-                         |   NodeMCU ESP8266 Controller  |
-                         |  (or mock_esp8266.py in Demo) |
-                         +-------------------------------+
-                           |          |              |
-                +----------+          |              +----------+
-                |                     |                         |
-                v                     v                         v
-        +---------------+     +---------------+         +---------------+
-        |  5x SG90/MG90S|     | SH1106 OLED   |         | Non-Volatile  |
-        |  Servo Motors |     | Display 128x64|         | SPIFFS Config |
-        +---------------+     +---------------+         +---------------+
-                |
-                v
-        +---------------+
-        | 3D Tendon Hand|
-        +---------------+
+                                    +-----------------------------------------+
+                                    |         User Control Modalities         |
+                                    +-----------------------------------------+
+                                                         |
+         +--------------------------+--------------------+--------------------+--------------------------+
+         |                          |                                         |                          |
+         v                          v                                         v                          v
++------------------+      +-------------------+                     +--------------------+      +------------------+
+|  Web Dashboard   |      | OpenCV+MediaPipe  |                     | SpeechRecognition  |      |   EEG / Neural   |
+| (Browser/Mobile) |      |  (Webcam Vision)  |                     |   & Edge-TTS (Mic) |      | BCI Sensor Stream|
++------------------+      +-------------------+                     +--------------------+      +------------------+
+         |                          |                                         |                          |
+    HTTP GET/POST                  UDP                                       HTTP                    Bandpass &
+ (Port 80 REST API)            (Port 8888)                            (Port 80 /gesture)         Classifier Pipeline
+         |                          |                                         |                  (In Development)
+         |                          |                                         |                          |
+         +--------------------------+--------------------+--------------------+--------------------------+
+                                                         |
+                                                         v
+                                         +-------------------------------+
+                                         |   NodeMCU ESP8266 Controller  |
+                                         |  (or mock_esp8266.py in Demo) |
+                                         +-------------------------------+
+                                           |          |              |
+                                +----------+          |              +----------+
+                                |                     |                         |
+                                v                     v                         v
+                        +---------------+     +---------------+         +---------------+
+                        |  5x SG90/MG90S|     | SH1106 OLED   |         | Non-Volatile  |
+                        |  Servo Motors |     | Display 128x64|         | SPIFFS Config |
+                        +---------------+     +---------------+         +---------------+
+                                |
+                                v
+                        +---------------+
+                        | 3D Tendon Hand|
+                        +---------------+
 ```
 
 ---
@@ -122,7 +136,6 @@ M2RA/
 │   └── RoboticHand.code-workspace    # Visual Studio Code multi-root workspace
 ├── .gitignore                        # Git exclusion rules
 ├── LICENSE                           # MIT Open Source License
-├── PROJECT_REPORT.md                 # Full technical report & architecture audit documentation
 └── README.md                         # This documentation guide
 ```
 
@@ -158,7 +171,7 @@ M2RA/
 | **All Servos** | VCC Power | External 5V | — | **DO NOT power servos from ESP 3.3V!** |
 | **All Servos** | Ground | External GND | GND | **Connect common ground with ESP8266 GND** |
 
-> [!CAUTION]
+> ⚠️ **Hardware Safety Notice:**  
 > SG90/MG90S servos draw up to 800mA stall current each. Simultaneous finger movement can pull up to 2A. Powering servos directly from the ESP8266 onboard 3.3V rail will cause brownout resets and potential hardware damage. Always use an external regulated 5V power supply with a common ground reference.
 
 ---
@@ -272,13 +285,6 @@ You can explore the entire project right now without any physical microcontrolle
 - **Servos Jitter or Hand Resets on Movement**: The power supply is inadequate or brownouts are occurring. Ensure your 5V power supply delivers at least 2A and that the power supply GND is tied to ESP8266 GND.
 - **Edge-TTS 403 Forbidden**: Make sure `requirements.txt` installs `edge-tts>=7.3.0`. Older versions (7.2.8) have outdated WebSocket authentication parameters.
 - **UDP Packets Not Reaching ESP8266**: Ensure your PC and the ESP8266 are on the same subnet and that your router / Windows Firewall allows UDP traffic on port 8888.
-
----
-
-## 📄 Project Report & Documentation
-
-For a comprehensive technical write-up, architectural design details, electrical analysis, and the defect audit log, refer to:
-- [**`PROJECT_REPORT.md`**](PROJECT_REPORT.md) — Comprehensive technical report covering Phase 1 development, audit remediation, and system verification.
 
 ---
 
